@@ -27,3 +27,10 @@
 {"blockRenderers":{"unstyled":{"attributes":{"class":"foo"}}}}
 {"entityMap":{},"blocks":[{"key":"8r91j","text":"a","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
 <p class="foo">a</p>
+
+# Attributes for wrapper tags
+{"blockRenderers":{"ul":{"attributes":{"class":"foo"}}}}
+{"entityMap":{},"blocks":[{"key":"8r91j","text":"a","type":"unordered-list-item","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
+<ul class="foo">
+  <li>a</li>
+</ul>

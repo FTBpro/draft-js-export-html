@@ -192,7 +192,7 @@ class MarkupGenerator {
         this.closeWrapperTag();
       }
       if (newWrapperTag) {
-        this.openWrapperTag(newWrapperTag);
+        this.openWrapperTag(newWrapperTag, blockRenderers && blockRenderers[newWrapperTag]);
       }
     }
     this.indent();
@@ -255,8 +255,6 @@ class MarkupGenerator {
     if (customRendererOptions) {
       let attributes = customRendererOptions && customRendererOptions.attributes;
       attrString = stringifyAttrs(attributes);
-
-      console.log({ attrString });
     }
 
     for (let tag of tags) {
@@ -277,10 +275,17 @@ class MarkupGenerator {
     }
   }
 
-  openWrapperTag(wrapperTag: string) {
+  openWrapperTag(wrapperTag: string, customRendererOptions) {
     this.wrapperTag = wrapperTag;
     this.indent();
-    this.output.push(`<${wrapperTag}>\n`);
+
+    let attrString = '';
+    if (customRendererOptions) {
+      let attributes = customRendererOptions && customRendererOptions.attributes;
+      attrString = stringifyAttrs(attributes);
+    }
+
+    this.output.push(`<${wrapperTag}${attrString}>\n`);
     this.indentLevel += 1;
   }
 
