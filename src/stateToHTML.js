@@ -200,7 +200,8 @@ class MarkupGenerator {
     let customRenderer = (blockRenderers != null && blockRenderers.hasOwnProperty(blockType)) ?
       blockRenderers[blockType] :
       null;
-    let customRendererOutput = customRenderer ? customRenderer(block) : null;
+    let customRendererOutput = customRenderer && typeof customRenderer === 'function' ?
+      customRenderer(block) : null;
     // Renderer can return null, which will cause processing to continue as normal.
     if (customRendererOutput != null) {
       this.output.push(customRendererOutput);
@@ -208,7 +209,7 @@ class MarkupGenerator {
       this.currentBlock += 1;
       return;
     }
-    this.writeStartTag(blockType);
+    this.writeStartTag(blockType, customRenderer);
     this.output.push(this.renderBlockContent(block));
     // Look ahead and see if we will nest list.
     let nextBlock = this.getNextBlock();
@@ -247,10 +248,19 @@ class MarkupGenerator {
     return this.blocks[this.currentBlock + 1];
   }
 
-  writeStartTag(blockType) {
+  writeStartTag(blockType, customRendererOptions) {
     let tags = getTags(blockType);
+
+    let attrString = '';
+    if (customRendererOptions) {
+      let attributes = customRendererOptions && customRendererOptions.attributes;
+      attrString = stringifyAttrs(attributes);
+
+      console.log({ attrString });
+    }
+
     for (let tag of tags) {
-      this.output.push(`<${tag}>`);
+      this.output.push(`<${tag}${attrString}>`);
     }
   }
 
