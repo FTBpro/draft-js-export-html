@@ -33,3 +33,7 @@
   <li>One</li>
   <li>Two</li>
 </ol>
+
+# HR
+{"entityMap":{},"blocks":[{"key":"x3nh8","text":"","type":"hr","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
+<hr><br></hr>
