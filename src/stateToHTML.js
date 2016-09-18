@@ -212,7 +212,11 @@ class MarkupGenerator {
       return;
     }
     this.writeStartTag(blockType, customRenderer);
-    this.output.push(this.renderBlockContent(block));
+
+    if (!isEmptyBlock(blockType)) {
+      this.output.push(this.renderBlockContent(block));
+    }
+
     // Look ahead and see if we will nest list.
     let nextBlock = this.getNextBlock();
     if (
@@ -234,7 +238,10 @@ class MarkupGenerator {
     } else {
       this.currentBlock += 1;
     }
-    this.writeEndTag(blockType);
+
+    if (!isEmptyBlock(blockType)) {
+      this.writeEndTag(blockType);
+    }
   }
 
   processBlocksAtDepth(depth: number) {
@@ -387,6 +394,15 @@ function stringifyAttrs(attrs: ?Attributes) {
     }
   }
   return parts.join('');
+}
+
+function isEmptyBlock(blockType: string): boolean {
+  switch (blockType) {
+    case 'hr':
+      return true;
+    default:
+      return false;
+  }
 }
 
 function canHaveDepth(blockType: string): boolean {
