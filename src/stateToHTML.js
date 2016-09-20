@@ -71,6 +71,7 @@ const DATA_TO_ATTR = {
     let attrMap = ENTITY_ATTR_MAP.hasOwnProperty(entityType) ? ENTITY_ATTR_MAP[entityType] : {};
     let data = entity.getData();
     let attrs = {};
+
     for (let dataKey of Object.keys(data)) {
       let dataValue = data[dataKey];
       if (attrMap.hasOwnProperty(dataKey)) {
@@ -80,6 +81,10 @@ const DATA_TO_ATTR = {
         attrs[dataKey] = dataValue;
       }
     }
+
+    attrs.rel = 'noopener';
+    attrs.target = '_blank';
+
     return attrs;
   },
   [ENTITY_TYPE.IMAGE](entityType: string, entity: EntityInstance): Attributes {

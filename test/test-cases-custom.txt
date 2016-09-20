@@ -21,7 +21,7 @@
 # Entity with a custom inline style
 {"inlineStyles":{"RED":{"style":{"color":"red"}}}}
 {"entityMap":{"0":{"type":"LINK","mutability":"MUTABLE","data":{"url":"/"}}},"blocks":[{"key":"8r91j","text":"a","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":0,"length":1,"style":"RED"}],"entityRanges":[{"offset":0,"length":1,"key":0}]}]}
-<p><a href="/"><span style="color: red">a</span></a></p>
+<p><a href="/" rel="noopener" target="_blank"><span style="color: red">a</span></a></p>
 
 # Attributes as block renderer
 {"blockRenderers":{"unstyled":{"attributes":{"class":"foo"}}}}
