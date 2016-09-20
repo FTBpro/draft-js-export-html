@@ -188,13 +188,14 @@ class MarkupGenerator {
     let {blockRenderers} = this.options;
     let block = this.blocks[this.currentBlock];
     let blockType = block.getType();
+
     let newWrapperTag = getWrapperTag(blockType);
     if (this.wrapperTag !== newWrapperTag) {
       if (this.wrapperTag) {
         this.closeWrapperTag();
       }
       if (newWrapperTag) {
-        this.openWrapperTag(newWrapperTag, blockRenderers && blockRenderers[newWrapperTag]);
+        this.openWrapperTag(newWrapperTag, blockRenderers && blockRenderers[newWrapperTag], block.data);
       }
     }
     this.indent();
@@ -284,15 +285,25 @@ class MarkupGenerator {
     }
   }
 
-  openWrapperTag(wrapperTag: string, customRendererOptions) {
+  openWrapperTag(wrapperTag: string, customRendererOptions, blockData) {
     this.wrapperTag = wrapperTag;
     this.indent();
 
     let attrString = '';
+    let attributes;
     if (customRendererOptions) {
-      let attributes = customRendererOptions && customRendererOptions.attributes;
-      attrString = stringifyAttrs(attributes);
+      attributes = customRendererOptions && customRendererOptions.attributes;
     }
+
+    if (blockData) {
+      const alignment = blockData.get('alignment');
+      if (alignment) {
+        attributes.class = attributes.class || '';
+        attributes.class += ` block--align-${alignment}`;
+      }
+    }
+
+    attrString = stringifyAttrs(attributes);
 
     this.output.push(`<${wrapperTag}${attrString}>\n`);
     this.indentLevel += 1;

@@ -34,3 +34,10 @@
 <ul class="foo">
   <li>a</li>
 </ul>
+
+# Alignment
+{"blockRenderers":{"ul":{"attributes":{"class":"foo"}}}}
+{"entityMap":{},"blocks":[{"data":{"alignment": "center"}, "key":"8r91j","text":"a","type":"unordered-list-item","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
+<ul class="foo block--align-center">
+  <li>a</li>
+</ul>
