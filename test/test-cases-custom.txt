@@ -35,9 +35,14 @@
   <li>a</li>
 </ul>
 
-# Alignment
+# Alignment for nested blocks
 {"blockRenderers":{"ul":{"attributes":{"class":"foo"}}}}
 {"entityMap":{},"blocks":[{"data":{"alignment": "center"}, "key":"8r91j","text":"a","type":"unordered-list-item","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
-<ul class="foo block--align-center">
-  <li>a</li>
+<ul class="foo">
+  <li class="block--align-center">a</li>
 </ul>
+
+# Alignment
+{"blockRenderers":{}}
+{"entityMap":{},"blocks":[{"data":{"alignment": "center"}, "key":"8r91j","text":"foo","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[]}]}
+<p class="block--align-center">foo</p>
