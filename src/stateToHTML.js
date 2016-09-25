@@ -200,7 +200,7 @@ class MarkupGenerator {
         this.closeWrapperTag();
       }
       if (newWrapperTag) {
-        this.openWrapperTag(newWrapperTag, blockRenderers && blockRenderers[newWrapperTag], block.data);
+        this.openWrapperTag(newWrapperTag, blockRenderers && blockRenderers[newWrapperTag]);
       }
     }
     this.indent();
@@ -217,7 +217,7 @@ class MarkupGenerator {
       this.currentBlock += 1;
       return;
     }
-    this.writeStartTag(blockType, customRenderer);
+    this.writeStartTag(blockType, customRenderer, block.data);
 
     if (!isEmptyBlock(blockType)) {
       this.output.push(this.renderBlockContent(block));
@@ -263,18 +263,30 @@ class MarkupGenerator {
     return this.blocks[this.currentBlock + 1];
   }
 
-  writeStartTag(blockType, customRendererOptions) {
+  writeStartTag(blockType, customRendererOptions, blockData = {}) {
     let tags = getTags(blockType);
 
     let attrString = '';
+    let attributes = {};
     if (customRendererOptions) {
-      let attributes = customRendererOptions && customRendererOptions.attributes;
-      attrString = stringifyAttrs(attributes);
+      attributes = customRendererOptions.attributes || {};
     }
+
+    const alignment = blockData.get('alignment');
+    const classAttribute = {};
+
+    if (alignment) {
+      classAttribute.class = attributes.class || '';
+      classAttribute.class += ` block--align-${alignment}`;
+      classAttribute.class = classAttribute.class.trim();
+    }
+
+    attrString = stringifyAttrs(Object.assign({}, attributes, classAttribute));
 
     for (let tag of tags) {
       this.output.push(`<${tag}${attrString}>`);
     }
+
   }
 
   writeEndTag(blockType) {
@@ -290,7 +302,7 @@ class MarkupGenerator {
     }
   }
 
-  openWrapperTag(wrapperTag: string, customRendererOptions, blockData) {
+  openWrapperTag(wrapperTag: string, customRendererOptions) {
     this.wrapperTag = wrapperTag;
     this.indent();
 
@@ -298,14 +310,6 @@ class MarkupGenerator {
     let attributes;
     if (customRendererOptions) {
       attributes = customRendererOptions && customRendererOptions.attributes;
-    }
-
-    if (blockData) {
-      const alignment = blockData.get('alignment');
-      if (alignment) {
-        attributes.class = attributes.class || '';
-        attributes.class += ` block--align-${alignment}`;
-      }
     }
 
     attrString = stringifyAttrs(attributes);
