@@ -200,7 +200,7 @@ class MarkupGenerator {
         this.closeWrapperTag();
       }
       if (newWrapperTag) {
-        this.openWrapperTag(newWrapperTag, blockRenderers && blockRenderers[newWrapperTag], block.data);
+        this.openWrapperTag(newWrapperTag, blockRenderers && blockRenderers[newWrapperTag]);
       }
     }
     this.indent();
@@ -273,12 +273,15 @@ class MarkupGenerator {
     }
 
     const alignment = blockData.get('alignment');
+    const classAttribute = {};
+
     if (alignment) {
-      attributes.class = attributes.class || '';
-      attributes.class += ` block--align-${alignment}`.trim();
+      classAttribute.class = attributes.class || '';
+      classAttribute.class += ` block--align-${alignment}`;
+      classAttribute.class = classAttribute.class.trim();
     }
 
-    attrString = stringifyAttrs(attributes);
+    attrString = stringifyAttrs(Object.assign({}, attributes, classAttribute));
 
     for (let tag of tags) {
       this.output.push(`<${tag}${attrString}>`);
