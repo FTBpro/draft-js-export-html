@@ -45,4 +45,5 @@
 # Empty blocks not rendered as blocks
 {"blockRenderers":{}}
 {"entityMap":{},"blocks":[{"key":"0vkh","text":"x","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{"alignment":"left"}},{"key":"ecvrl","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{"alignment":"left"}},{"key":"98uo0","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{"alignment":"left"}}]}
-<p>x</p><br><br>
+<p>x</p>
+<br><br>
