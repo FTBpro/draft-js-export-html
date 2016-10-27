@@ -217,9 +217,15 @@ class MarkupGenerator {
       this.currentBlock += 1;
       return;
     }
-    this.writeStartTag(blockType, customRenderer, block.data);
 
-    if (!isEmptyBlock(blockType)) {
+    const isEmptyText = block.text.trim().length === 0;
+    const isCurrentBlockAnEmptyBlock = isEmptyBlock(blockType);
+
+    if (isEmptyText || isCurrentBlockAnEmptyBlock) {
+      this.writeStartTag(blockType, customRenderer, block.data);
+    }
+
+    if (!isCurrentBlockAnEmptyBlock) {
       this.output.push(this.renderBlockContent(block));
     }
 
@@ -245,7 +251,7 @@ class MarkupGenerator {
       this.currentBlock += 1;
     }
 
-    if (!isEmptyBlock(blockType)) {
+    if (isEmptyText && !isCurrentBlockAnEmptyBlock) {
       this.writeEndTag(blockType);
     }
   }
