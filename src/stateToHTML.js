@@ -221,7 +221,7 @@ class MarkupGenerator {
     const isEmptyText = block.text.trim().length === 0;
     const isCurrentBlockAnEmptyBlock = isEmptyBlock(blockType);
 
-    if (isEmptyText || isCurrentBlockAnEmptyBlock) {
+    if (!isEmptyText || isCurrentBlockAnEmptyBlock) {
       this.writeStartTag(blockType, customRenderer, block.data);
     }
 
@@ -251,7 +251,7 @@ class MarkupGenerator {
       this.currentBlock += 1;
     }
 
-    if (isEmptyText && !isCurrentBlockAnEmptyBlock) {
+    if (!isEmptyText && !isCurrentBlockAnEmptyBlock) {
       this.writeEndTag(blockType);
     }
   }
